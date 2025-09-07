@@ -2,13 +2,13 @@ from django.http import JsonResponse
 from jsonrpcserver import method, dispatch
 
 
-@method
-def echo(message):
+@method(name="hello.world")
+def hello_world(message):
     return {"echo": message}
 
 
-@method
-def status():
+@method(name="health.check")
+def health_check():
     return {"status": "ok"}
 
 
@@ -20,6 +20,6 @@ def login(username=None, password=None):
     return {"error": "Invalid credentials"}
 
 
-def rpc_view(request):
+def jsonrpc_dispatch(request):
     response = dispatch(request.body.decode())
     return JsonResponse(response, safe=False)
